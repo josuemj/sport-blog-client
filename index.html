@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .pressed { background-color: lightgrey; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel"> 
+    const Header = () => {
+      
+      return (
+        <header>
+          WELCOME TO MY BLOG
+        </header>
+      )
+    }
+
+    const Footer = () => {
+      
+      return (
+        <footer>
+          Copyright 2024 UVG
+        </footer>
+      )
+    }
+
+    const Post = ({ title, body, videoLink}) => {
+      console.log(videoLink)
+      return (
+        <li>
+          <h1>{title}</h1>
+          <p>{body}</p>
+          <a href={`https://www.youtube.com/embed/${videoLink}`}>Watch {title}</a>
+        </li>
+      )
+    }
+
+    const Posts = () => {
+     
+      const [ posts, setPosts ] = React.useState([])
+
+      const getPosts = async () => {
+        const apiResponse = await fetch('https://api.tiburoncin.lat/22397/posts')
+        const jsonPosts = await apiResponse.json()
+        console.log(jsonPosts)
+        const formattedPosts = jsonPosts.map(
+          ({ title, content, video }) => ({ title, body: content, videoLink:video })
+        ) 
+        setPosts(formattedPosts)
+      }
+ 
+      React.useEffect(() => {
+        getPosts()
+      }, [])
+
+      if (posts.length === 0) {
+        return (
+          <ul>
+            <li>Loading...</li>
+          </ul>
+        )
+      }
+   
+      return (
+        <ul>
+          {posts.map(({ title, body, videoLink }) => <Post title={title} body={body} videoLink = {videoLink} />)}   
+        </ul>
+      )
+    }
+
+    const App = () => {
+      
+      return (
+        <main>
+          <Header />
+          <Posts />
+          <Footer />
+        </main>
+      )
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(<App />)
+    </script>
+</body>
+</html>
