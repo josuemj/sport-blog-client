@@ -14,9 +14,18 @@
     <div id="root"></div>
     <script type="text/babel"> 
     const Header = () => {
-      
+      const styles = {
+        backgroundColor: "rgb(21, 126, 177)",
+        height: "100px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontFamily: "fantasy",
+        fontSize: "46px",
+
+      }
       return (
-        <header>
+        <header style={styles}>
           WELCOME TO MY BLOG
         </header>
       )
