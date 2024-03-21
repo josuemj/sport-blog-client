@@ -50,18 +50,54 @@
     }
 
     const Post = ({ title, body, videoLink}) => {
+
+      const listStyle = {
+        listStyleType: "none", 
+        padding: "16px", 
+        margin: 0
+      }
+
+      const postContentStyle = {
+        borderRadius: "10px",
+        backgroundColor: "white",
+        padding: "10px", 
+      }
+
+      const contentStyle = {
+        fontFamily: "monospace",
+        fontSize: "20px",
+        textAlign: "justify"
+
+      }
+
+      const titleStyle = {
+        fontFamily: "Fantasy",
+        fontSize: "20px",
+        display: "flex",
+        justifyContent: "center",
+        fontSize: "30px"
+      }
+
       console.log(videoLink)
       return (
-        <li>
-          <h1>{title}</h1>
-          <p>{body}</p>
+        <li style={listStyle}>
+          <div style={postContentStyle}>
+          <h1 style = {titleStyle}>{title}</h1>
+          <p style= {contentStyle}>{body}</p>
           <a href={`https://www.youtube.com/embed/${videoLink}`}>Watch {title}</a>
+          </div>
+          
         </li>
       )
     }
 
     const Posts = () => {
-     
+      const divStyle = {
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: "1",
+        backgroundColor: "rgb(180, 217, 232, 1)"
+      }
       const [ posts, setPosts ] = React.useState([])
 
       const getPosts = async () => {
@@ -87,9 +123,12 @@
       }
    
       return (
-        <ul>
+        <div style={divStyle}>
+          <ul>
           {posts.map(({ title, body, videoLink }) => <Post title={title} body={body} videoLink = {videoLink} />)}   
         </ul>
+        </div>
+        
       )
     }
 
